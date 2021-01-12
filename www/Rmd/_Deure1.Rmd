@@ -42,4 +42,3 @@ ggplot(dataXY, aes(x=CALORIES, y=ESPVIDA)) +
 
 Comenta si la associació observada justifica o no parlar de causalitat. 
 
-NOTA: DEscarrega la plantilla de solució en Rmd.

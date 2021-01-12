@@ -155,7 +155,7 @@ We now investigate the probability distribution that is most central to statisti
 
 #### Distribució de notes d’estudiants
 
-Veure [exemple](https://griu.github.io/meacp_2021/www/web/M2021Diari.html#qqplot-de-normalitat-per-les-notes-de-les-paau) enllaç.
+Veure [exemple](https://griu.github.io/meacp_2021/www/web/M2021Diari.html#distribuci-de-notes-destudiants) enllaç.
 
 ### Exemple amb la variable diners en butxaca (estudiants de MQ III)
 
