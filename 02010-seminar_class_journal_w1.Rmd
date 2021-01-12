@@ -1,0 +1,16 @@
+# (PART) Diari classe Seminaris {-}
+
+```{r child = '_header.Rmd'}
+```
+
+# Seminaris Setmana 1 (2020-01-13)
+
+## Programació amb R
+
+Introducció a la [Programació amb R per al Mètodes Estadístics Aplicats en Ciències Polítiques](https://griu.github.io/meacp/).
+
+## Comentari Deure 1.
+
+Veure aparatat deures: \@ref(homework).
+
+

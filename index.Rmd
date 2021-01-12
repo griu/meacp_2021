@@ -1,0 +1,33 @@
+--- 
+title: "Diari de les Classes  de Mètodes Estadístics Aplicats (21703). Curs 2020-2021"
+author: "Ferran Carrascosa Mallafrè"
+date: "2021-01-10"
+site: bookdown::bookdown_site
+output:
+  bookdown::gitbook:
+    split_by: chapter
+    includes:
+      in_header: style.html
+    highlight: espresso
+documentclass: book
+bibliography: [meacp.bib]
+biblio-style: apalike
+link-citations: yes
+nocite: | 
+  @ferranc
+description: "Diari de les classes del Curs 2020-2021 de mètodes estadístics aplicats a ciències polítiques."
+---
+
+```{r child = '_header.Rmd'}
+```
+
+# Introducció  {-}
+
+Aquesta web té com a objectiu donar suport als continguts de les clases de teoría y seminaris del curs 2020-2021 de Mètodes Estadístics Aplicats (21703).
+
+Els continguts de la web s'estructuren de la següent forma:
+
+- Diari d'apunts de clase de teoria
+- Diari d'apunts dels seminaris
+- Deures del curs
+
