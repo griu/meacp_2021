@@ -7,6 +7,8 @@
 
 ## Deure 1
 
+**NOTA: Descarrega la [plantilla de solució deure 1 en Rmd](https://raw.githubusercontent.com/griu/meacp_2021/main/www/Rmd/_Deure1.Rmd).**
+
 En el link https://griu.github.io/meacp_2021/data/dataXY.dat hi han les dues variables ESPVIDA i CALORIES del fitxer PAISOS.SAV (són l'esperança de vida y les calories per habitant en diferents paisos del mon). Feu: 
 
 Utiliza el program (Excel, SPSS o R) que coneguis. La lectura de les dades amb R seria
@@ -32,7 +34,6 @@ ggplot(dataXY, aes(x=CALORIES, y=ESPVIDA)) +
 
 c) Comenta si la associació observada justifica o no parlar de causalitat. 
 
-**NOTA: Descarrega la [plantilla de solució deure 1 en Rmd](https://griu.github.io/meacp_2021/www/Rmd/_Deure1.Rmd).**
 
 ## Deure 2
 
