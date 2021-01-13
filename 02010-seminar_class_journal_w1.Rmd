@@ -7,7 +7,9 @@
 
 ## Programació amb R
 
-Introducció a la [Programació amb R per al Mètodes Estadístics Aplicats en Ciències Polítiques](https://griu.github.io/meacp/).
+- Introducció a la [Programació amb R per al Mètodes Estadístics Aplicats en Ciències Polítiques](https://griu.github.io/meacp/).
+
+- [Dades pels projectes](file:///C:/Users/usuari/Documents/GitHub/blogdown/public/meacp/getdata.html).
 
 ## Comentari Deure 1.
 
