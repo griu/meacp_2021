@@ -14,7 +14,7 @@ En el link https://griu.github.io/meacp_2021/data/dataXY.dat hi han les dues var
 Utiliza el program (Excel, SPSS o R) que coneguis. La lectura de les dades amb R seria
 
 ```{r echo=TRUE}
-dataXY<-read.table('https://griu.github.io/meacp_2021/data/dataXY.dat', header=TRUE, dec=",", sep=";")
+dataXY<-read.table('https://raw.githubusercontent.com/griu/griu.github.io/main/meacp_2021/data/dataXY.dat', header=TRUE, dec=",", sep=";")
 ```
 
 a) Una descripció breu univariant de cada una de les variables; 
