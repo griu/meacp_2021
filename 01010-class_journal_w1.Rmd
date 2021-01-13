@@ -10,16 +10,10 @@ Discussió sobre:
 - Logística del curs: 
    - Teoria i seminaris: Horaris
    - Canals: Aula global, Collaborate, Web de curs
-- El [PDA](data/PDAmetodesM2021.pdf)
+- El [PDA](https://gestioacademica.upf.edu/doa/consultaPublica/look[conpub]MostrarPubGuiaDocAs?entradaPublica=true&idiomaPais=ca.ES&_anoAcademico=2020&_codAsignatura=21703)
 - Avaluació: Participació seminaris (15%), Treball (35%), Examen Final (50%)
 - Disseny del curs: Conceptes, dades, programari
    - Eina de treball: R
-
-Discussió sobre:
-
-- Treballs
-- Exercicis
-- Participació
 
 ## Avaluació
 
