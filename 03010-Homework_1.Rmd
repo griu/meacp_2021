@@ -50,3 +50,42 @@ Quants països tenen menys d’un terç de la seva població alfabetitzada? I d�
 3. Quina és la mitjana d’habitants per metge? Quin és el valor d’aquesta mitjana en cada un dels tres nivells de desenvolupament humà en què s’han classificat els països? Hi ha diferències significatives entre elles?
 4. En relació al fitxer de dades PAISOS.SAV, tria una variable Y del teu interès i descriu la variació de la mateixa emprant un altre variable del fitxer de dades. En aquest procés, ajusta un model de regressió lineal simple entre la variable depenent i la variable explicativa, descriu els resultats de la regressió lineal simple, i comprova que la hipòtesi de linealitat es plausible en aquestes dades. Si veus que la linealitat no es plausible, efectua la corresponent transformació prèvia de les variables. Recull els residus, I fes un gràfic dels residus vs. la variable depenent ajustada.
 5. Fes un breu resum de les conclusions que creus que es desprenen de la teva anàlisi. Explica també les limitacions de l’anàlisi.
+
+## Deure 3
+
+En relació a les dades de PAISOS.SAV.
+
+- Investiga la variació de ESPVIDA en funció de CALORIES, controlant o no per altres variables explicatives.
+- Inspecciona els residus de la regressió.
+- Fes un breu resum de les conclusions que creus que es desprenen de la dependencia de ESPVIDA i CALORIES.
+
+## Deure 4
+
+Considera les dades bank.sav (veure els fitxers de dades que hi ha a la web de
+l’assignatura) de salaris de treballadors del sector de banca.
+
+Imagina que hi ha un plet en aquesta empresa sobre discriminació per raó de gènere.
+De fet, el salari actual dels homes és molt superior al de les dones.
+
+Fes les anàlisis de regressió simple i múltiple, amb les interpretacions i arguments
+corresponents, que aporten evidència empírica en defensa de l’associació que ha
+iniciat el plet contra l’empresa.
+
+Dades:
+
+library(foreign)
+
+d <- read.spss("http://84.89.132.1/~satorra/dades/bank2.sav", to.data.frame=TRUE)
+
+names(d)
+
+1. Inicialment fes un breu descriptiu (freqüències, mitjanes,...) de les variables del fitxer segons siguin categòriques o contínues.
+2. Visualitza un scatterplot (gràfic de dispersió) de cadascuna de les variables
+contínues respecte a la variable del salari actual. Comenta la linealitat o no, de les relacions observades.
+3. Calcula la correlació de Pearson de cadascuna de les variables contínues i la variable salari actual.
+4. Transforma la variable Sexo a una variable numèrica.
+5. Utilitza una regressió lineal simple per tal de verificar que efectivament hi ha diferències salarials entre homes i dones.
+6. Explora ara diferents models lineals múltiples usant com a variable depenent Salari Actual i com a regressors del model la variable sexe i altres factors de control (Nivell educatiu, Mesos des del contracte, experiència prèvia,...) .
+7. Un cop escollit el model anota quins son els coeficients del model, el seu nivell de significació, quin nivell d’ajust ha obtingut el model, això com l’histograma dels residus i el gràfics de dispersió dels valors ajustats sobre els residus. Comenta breument els diferents resultats
+8. Incorpora en el model la variable categòrica Categoria laboral i reporta els mateixos elements que en el punt anterior.
+9. Escriu quines son les conclusions principals que s’extreuen del model pel que fa a la qüestió de la discriminació del salari.

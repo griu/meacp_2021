@@ -3,7 +3,7 @@
 ```{r child = '_header.Rmd'}
 ```
 
-# Seminaris Setmana 1 (2020-01-13)
+# Seminaris Setmana 1 (2021-01-13)
 
 ## Programació amb R
 

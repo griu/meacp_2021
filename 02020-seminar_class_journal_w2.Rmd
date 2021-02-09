@@ -1,0 +1,29 @@
+
+```{r child = '_header.Rmd'}
+```
+
+# Seminaris Setmana 2 (2021-01-20)
+
+## Comentari dels projectes en grup
+
+- Formació de grups setmana 2021-01-27. Pensar tema.
+- Exploració de propostes de [dades  pel projecte](https://griu.github.io/meacp/getdata.html)
+
+## Paquets addicionals
+
+- Revisió posada a apunt del R
+
+```
+install.packages("stargazer")
+install.packages("ggcorrplot")
+```
+
+## Correcció deure 1
+
+- Solució a l'aula
+
+## Comentari Deure 2
+
+- Veure aparatat deures: \@ref(homework).
+
+

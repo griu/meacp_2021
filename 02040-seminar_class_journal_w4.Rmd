@@ -1,0 +1,16 @@
+
+```{r child = '_header.Rmd'}
+```
+
+# Seminaris Setmana 4 (2021-02-3)
+
+## Correcció Deure 3
+
+## Comentari Deure 4
+
+- Veure aparatat deures: \@ref(homework).
+
+## Projectes en grup
+
+- tutories per grups.
+

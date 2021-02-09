@@ -1,0 +1,280 @@
+
+```{r child = '_header.Rmd'}
+```
+
+# Teoria Setmana 5 (2020-02-9)
+
+https://ceo.gencat.cat/ca/barometre/detall/index.html?id=7908
+
+Data de treball de camp
+
+13 a 21 de gener de 2021
+
+Data d’alta del registre
+
+29-01-2021
+
+Mostra
+
+1.100
+
+Organisme promotor
+
+Departament de la Presidència (PRE) - Centre d'Estudis d'Opinió (CEO)
+
+Resum
+
+Opinió sobre l'actual situació política, econòmica i social que es viu a Catalunya, així com l'actitud davant de la política i el comportament electoral.
+
+Documents
+## Salaries
+
+El conjunt de dades Salary informa d'una mostra de salaris de professors universitaris recopilats durant l'any acadèmic 2008-2009 a USA. Addicionalment als salaris en dòlars, les dades inclouen les següents 5 variables: gènere, anys des del Doctorat, anys de servei, disciplina (teoria (1) o aplicat (2)) i rang acadèmic. 
+
+Hi ha una consulta sobre la possible discriminació salarial per gènere. 
+
+```{r, warning=FALSE}
+library(car)
+names(Salaries)
+```
+
+```{r}
+dim(Salaries)
+```
+
+### Anàlisis univariant
+
+```{r}
+suppressPackageStartupMessages(library(tidyverse))
+
+Salaries %>%
+  ggplot(aes(x=salary)) +
+  geom_density()+
+  labs(title="Densitat Salaris")
+```
+
+```{r}
+Salaries %>%
+  ggplot(aes(x=log(salary))) +
+  geom_density()+
+  labs(title="Densitat Log-Salaris")
+```
+
+
+```{r}
+Salaries %>%
+  ggplot(aes(x=sex)) +
+  geom_bar()
+```
+
+```{r}
+Salaries %>%
+  ggplot(aes(x=rank)) +
+  geom_bar()
+```
+
+```{r}
+Salaries %>%
+  ggplot(aes(x=discipline)) +
+  geom_bar()
+```
+
+```{r}
+Salaries %>%
+  ggplot(aes(x=yrs.since.phd)) +
+  geom_density()
+```
+
+```{r}
+Salaries %>%
+  ggplot(aes(x=log(yrs.since.phd))) +
+  geom_density()
+```
+
+```{r}
+Salaries %>%
+  ggplot(aes(x=yrs.service)) +
+  geom_density()
+```
+
+```{r}
+Salaries %>%
+  ggplot(aes(x=log(yrs.service))) +
+  geom_density()
+```
+
+### Anàlisis bivariant
+
+```{r}
+Salaries <- Salaries %>%
+  mutate(log_salary = log(salary)
+         ,log_yrs.since.phd = log(yrs.since.phd)
+         ,yrs.since.phd2 = yrs.since.phd**2
+         ,log_yrs.service = log(yrs.service+1)
+         ,yrs.service2 = yrs.service**2
+         )
+
+Salaries %>% select(salary,log_salary,yrs.since.phd,log_yrs.since.phd,yrs.since.phd2) %>% plot()
+```
+
+```{r}
+Salaries %>% select(salary,log_salary,yrs.since.phd,log_yrs.since.phd,yrs.since.phd2) %>% cor() %>% round(3)
+```
+
+
+```{r}
+Salaries %>%
+  ggplot(aes(x=sex,y=salary)) +
+  geom_boxplot()
+```
+
+```{r}
+Salaries %>%
+  ggplot(aes(x=sex,y=log(salary))) +
+  geom_boxplot()
+```
+
+
+```{r}
+reg1 <- lm(salary~sex, data=Salaries)
+summary(reg1)
+```
+
+Observem que els salaris en homes són $14.088 superiors que en les dones. Això ens diu que, quan comparem els salaris de forma directe, entre homes i dones, amb un nivell de confiança del 95%, hi ha diferències significatives.
+
+```{r, warning=FALSE}
+library(stargazer)
+logreg1 <- lm(log(salary)~sex, data=Salaries)
+stargazer(reg1,logreg1, type="text")
+```
+
+La comparativa en termes de logaritme neperià del salari, mostra igualment diferencies significatives amb un 95% de confiança. El coeficient 0,129 del gènere, ens diu que els homes, tenen un salari un 12,9% (aproximadament) per sobre de les dones.
+
+Incorporem ara nous factor.
+
+```{r, warning=FALSE}
+logreg2 <- lm(log(salary) ~ sex + yrs.since.phd, data= Salaries)
+
+stargazer(logreg1, logreg2, type="text")
+```
+
+Observem que la variable "anys des del doctorat" guanya molt pes en la regressió, i produeix que la variables gènere informi que els homes guanyen un 7,5% més les dones (a igual nombre de anys des del doctorat), essent ara, aquesta relació, no significativa amb un nivell del confiança del 95%.
+
+En aquest cas, el coeficient 0.008 ens diu que per cada any addicional, hi ha un augment del 0,8% del salari.
+
+
+```{r}
+Salaries %>% 
+  ggplot(aes(x=yrs.since.phd, y=log(salary), color=sex))+
+  geom_point()
+```
+
+### Realció log-log
+
+```{r, warning=FALSE}
+loglogreg2 <- lm(log(salary) ~ sex + log(yrs.since.phd), data= Salaries)
+
+stargazer(logreg1, logreg2, loglogreg2, type="text")
+```
+
+Si agafem els anys d’experiència en termes de logaritme observem 3 coses:
+
+- El coeficient 0,167 indica que per cada augment del 100% (duplicar) els anys des del doctorat, el salari augmenta un 16,7%. 
+- Per altra banda la variable gènere, passa a ser significativa amb un 95% de confiança.
+- La regressió passa a explicar del 18,8% a un 27,8% de la variabilitat del logaritme dels salaris.
+
+
+```{r}
+Salaries %>% 
+  ggplot(aes(x=log(yrs.since.phd), y=log(salary), color=sex))+
+  geom_point()
+```
+
+### Realció x**2
+
+```{r, warning=FALSE}
+logreg22 <- lm(log(salary) ~ sex + yrs.since.phd +yrs.since.phd2, data= Salaries)
+
+stargazer(logreg1, logreg2, loglogreg2, logreg22, type="text")
+```
+
+Ara no hi ha una interpretació directa. Veiem que és una realció significativa al 95% de confiança en tots els factors.
+
+
+```{r}
+Salaries %>% 
+  ggplot(aes(x=yrs.since.phd, y=log(salary), color=sex))+
+  stat_smooth(method = "lm", formula = y ~ x + I(x^2), size = 1)+
+  geom_point()
+```
+
+### Interaccions
+
+Anem a analitzar la interacció entre gènere i anys des del doctorat.
+
+```{r, warning=FALSE}
+logreg3 <- lm(log(salary) ~ sex * yrs.since.phd , data= Salaries)
+stargazer(logreg1, logreg2, logreg3, type="text")
+```
+
+```{r}
+logreg4 <- lm(log(salary) ~ sex * yrs.since.phd + rank + discipline , data= Salaries)
+summary(logreg4)
+```
+
+
+```{r}
+logreg5 <- lm(log(salary) ~ sex + yrs.since.phd + yrs.since.phd2 + rank + discipline , data= Salaries)
+summary(logreg5)
+```
+
+
+```{r}
+avPlots(logreg5)
+```
+
+```{r}
+vif(logreg5)
+```
+
+```{r}
+plot(logreg5,1)
+```
+
+### Estimadors robustos
+
+[AnalizaR Datos Políticos](https://arcruz0.github.io/libroadp/linear.html)
+
+- HC0 = es el original de White (Wooldridge 2016)
+- HC1 = Es el que usa el software de Stata
+- HC3 =Es el más conservador, por lo tanto, es muy recomendable
+
+
+```{r}
+
+library(texreg)
+library(lmtest)
+library(sandwich)
+logreg5_robust_3 <- coeftest(logreg5, vcov = vcovHC(logreg5, "HC3"))
+logreg5_robust_1 <- coeftest(logreg5, vcov = vcovHC(logreg5, "HC1"))
+logreg5_robust_0 <- coeftest(logreg5, vcov = vcovHC(logreg5, "HC0"))
+
+models_robust <- list(logreg5, logreg5_robust_0, 
+                      logreg5_robust_1, logreg5_robust_3)
+
+screenreg(models_robust,
+          custom.model.names = c("sin ES robustos", 
+                                 "robustos HC0", "robustos HC1", "robustos HC3"))
+## 
+```
+
+Normalidad
+```{r}
+plot(logreg5,2)
+```
+
+Outlyers
+
+```{r}
+plot(logreg5,5)
+```

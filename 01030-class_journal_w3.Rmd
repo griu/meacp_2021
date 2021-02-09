@@ -1,0 +1,199 @@
+
+```{r child = '_header.Rmd'}
+```
+
+# Teoria Setmana 3 (2020-01-27)
+
+## Repas dia anterior
+
+#### PAISOS.SAV
+
+Alerta! Correlació no indica sempre causalitat. Poden existir altres factors ocults amb un efecte sobre ambdós factors.
+
+```{r}
+library(foreign)
+data <- read.spss( "http://84.89.132.1/~satorra/dades/PAISOS.SAV", use.value.labels = TRUE, to.data.frame = TRUE )
+data <- data %>% select(PAIS, ESPVIDA, CALORIES, PIB, HABMETG ,   ALFAB)
+data <- na.omit(data)
+rownames(data)<-NULL  # reiniciem la numeracio de les files
+```
+
+
+### Regressió simple
+
+```{r}
+data <- data %>% mutate(
+  LPIB = log(PIB) 
+  ,Lhabmetges = log(HABMETG)
+  )
+
+reg1 <- lm(ESPVIDA ~ CALORIES, data=data)
+reg2 <- lm(ESPVIDA ~ CALORIES + ALFAB, data=data )
+reg3 <- lm(ESPVIDA ~   CALORIES + LPIB + Lhabmetges  +ALFAB, data=data)  
+
+stargazer(reg1, reg2, reg3, type='text')
+```
+
+### Regressió lineal simple
+
+$$ Y = \beta_0 + \beta_1x + \epsilon  $$
+
+- La $\beta_0$ terme independent
+- La $\beta_1$ coeficient de regressió
+- La esperança, $E(Y)=\beta_0+\beta_1E(x)$
+- El coeficient, $\beta_1$ és un increment en el valor esperat de $Y$ d’un augmenta unitari en la variable X
+- El $\epsilon$ és un terme de pertorbació, variable estadística $\epsilon∼N(0,\sigma^2)$, valor esperat zero i variància constant. Noteu que la variància de $\epsilon$ representa la intensitat de variació de Y al voltant de la recta de regressió $Y=\beta_0+\beta_1x$.
+
+**Ajust de la regressió:**
+
+$$ Y = b_0 + b_1x + \epsilon  $$
+
+$b_0=27.061$, $b_1=0.014$, $b_0$ i $b_1$ són estimacions de $\beta_0$ i $\beta_1$ respectivament.
+
+Totes les estimacions estan subjectes a un error tipus (standard error). En el nostre exemple: l’error tipus de l’estimació ´de $beta_1=0.014$ és $0.001$.
+
+Coeficient de determinació múltiple, $R^2=0.559$ és a dir, $55.9%$ de la variació de $Y$ és deguda a la variable X.
+
+### Regressió lineal múltiple
+
+$$ Y = \beta_0 + \beta_1x_1  + \beta_2x_2 + \epsilon  $$
+
+- El $\beta_0$ terme independent
+- La $\beta_1$, $\beta_2$ coeficients de regressió parcial
+- La Esperança: $E(Y)=\beta_0+\beta_1E(x_1)+\beta_2E(x_2)$
+- $\beta_2$ és un increment en el valor esperat de $Y$ d’un augment unitari en la variable $X_2$ quan $X_1$ es manté constant. Idem per $\beta_1$ (versus $X_2$)
+- $\epsilon$ terme de perturbació, variable estadística $\epsilon∼N(0,\sigma^2)$, valor esperat zero i variància constant. Noteu que la variància de $\epsilon$ representa la intensitat de variació de Y al voltant de la recta de regressió $Y=\beta_0+\beta_1x_1+\beta_2x_2$.
+
+**Regressió estimada:**
+
+$$ Y = b_0 + b_1x_1  + b_2x_2 $$
+
+Els coeficients: $b_0=25.403$; $b_1=0.007$; $b_2=0.278$
+
+El $R^2=0.044$ és un $4.4%$ de variació de $Y$ ve explicada per la variació conjunta de $X_1$ i $X_2$.
+
+## Interpretació del model
+
+### Gráficament
+
+#### Residus versus valors ajustats
+
+```{r}
+plot(reg3,1)
+```
+
+- verifiquem la homoscedasticitat
+
+
+#### Análisis normalitat
+
+Q-Q plot.
+
+```{r}
+plot(reg3,2)
+```
+
+Densitat residus.
+
+```{r}
+plot(density(residuals(reg3)))
+```
+
+#### Outlyers
+
+Distancia de Cook.
+
+```{r}
+plot(reg3,4)
+```
+
+
+```{r}
+data$PAIS[c(4,35,89)]
+```
+
+Residus estandarditzats vs leverage
+
+
+```{r}
+plot(reg3,5)
+
+```
+
+### Gràfics de regressio parcial
+
+```{r}
+library(car)
+
+  avPlots(reg3)
+```
+
+Per obtenir només un gràfic.
+
+```{r}
+ avPlots(reg3, ~ CALORIES)
+```
+
+
+## Variance Inflation Factor (VIF)
+
+[Manual de Referència](https://arcruz0.github.io/libroadp/linear.html#testeando-los-supuestos-de-mco)
+
+Per identificar multicolinealitat entre les variables explicatives es pot usar el VIF o variance inflation factors (VIF). Com més gran es el calor, més alta la multicolinealitat. El VIF de una variable s'obté de la regressió d'aquesta contra la resta de variables del model: Es calcula el VIF per cada variable explicativa i aquelles amb valor més alt s'eliminen. LA frontera és arbitraria, tot i que s'acostuma a considerar valors superiors a 5 com a molt alts...
+
+
+```{r}
+library(car)
+
+vif(reg3)
+```
+
+
+## Dades del Bank
+
+Dades de salaris en un banc.
+
+Imagina que hi ha un plet en aquesta empresa sobre discriminació per raó de gènere.
+De fet, el salari actual dels homes és molt superior al de les dones.
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(foreign) ; d <- read.spss("http://84.89.132.1/~satorra/dades/bank2.sav", to.data.frame=TRUE)
+```
+
+Residus.
+
+```{r}
+hist(d$SALBEG)
+```
+
+```{r}
+boxplot(SALNOW ~ SEX, data=d)
+```
+
+t-test.
+
+```{r, results='asis'}
+library(stargazer)
+mod1 <- lm(SALNOW ~ SEX, data=d)   
+mod2 <- lm(log(SALNOW) ~ SEX, data=d)   
+stargazer(mod1,mod2, type='html')
+```
+
+Afegim covariables.
+
+```{r}
+plot(SALNOW ~ AGE, data=d)
+abline(lm(SALNOW ~ AGE, data=d), col="red")
+```
+
+```{r, results='asis'}
+library(stargazer)
+mod1 <- lm(SALNOW ~ SEX + AGE, data=d)   
+mod2 <- lm(log(SALNOW) ~ SEX + AGE, data=d)   
+stargazer(mod1,mod2, type='html')
+```
+
+
+

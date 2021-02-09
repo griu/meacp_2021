@@ -1,0 +1,19 @@
+
+```{r child = '_header.Rmd'}
+```
+
+# Seminaris Setmana 3 (2021-01-27)
+
+## Comentari dels projectes en grup
+
+- Inici tutories per grups.
+
+## Correcció deure 2
+
+- Solució a l'aula
+
+## Comentari Deure 3
+
+- Veure aparatat deures: \@ref(homework).
+
+
